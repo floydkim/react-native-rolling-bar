@@ -10,6 +10,7 @@ type Props = {
   customStyle?: Object,
   animationDuration?: number,
   delayBetween?: number,
+  defaultStyle?: boolean,
 };
 
 const RollingBar: (props: Props) => React$Node = props => {
@@ -20,14 +21,15 @@ const RollingBar: (props: Props) => React$Node = props => {
     children,
     interval = 3000,
     customStyle,
-    animationDuration = 300,
+    animationDuration = 600,
     delayBetween = 100,
+    defaultStyle = false,
   } = props;
   const childrenCount = React.Children.count(children);
 
   const animate = useCallback(() => {
     const defaultConfig = {
-      duration: animationDuration,
+      duration: animationDuration / 2,
       useNativeDriver: true,
       isInteraction: false,
     };
@@ -70,7 +72,7 @@ const RollingBar: (props: Props) => React$Node = props => {
         }),
       ]),
     ]).start();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [animationDuration]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     animate();
@@ -79,10 +81,14 @@ const RollingBar: (props: Props) => React$Node = props => {
   useInterval(() => {
     setVisibleIndex((visibleIndex + 1) % childrenCount);
     animate();
-  }, interval + animationDuration * 2 + delayBetween);
+  }, interval + animationDuration + delayBetween);
 
   return (
-    <View style={[styles.container, customStyle]}>
+    <View
+      style={[
+        defaultStyle ? styles.container : styles.containerMinimal,
+        customStyle,
+      ]}>
       <Animated.View
         style={{
           opacity,
@@ -113,6 +119,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
+  },
+  containerMinimal: {
+    flex: 1,
+    overflow: 'hidden',
+    justifyContent: 'center',
   },
   hideRow: {display: 'none'},
 });
