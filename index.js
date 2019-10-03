@@ -11,6 +11,7 @@ type Props = {
   animationDuration?: number,
   delayBetween?: number,
   defaultStyle?: boolean,
+  forceRoll?: boolean,
 };
 
 const RollingBar: (props: Props) => React$Node = props => {
@@ -24,6 +25,7 @@ const RollingBar: (props: Props) => React$Node = props => {
     animationDuration = 600,
     delayBetween = 100,
     defaultStyle = false,
+    forceRoll = false,
   } = props;
   const childrenCount = React.Children.count(children);
 
@@ -33,54 +35,70 @@ const RollingBar: (props: Props) => React$Node = props => {
       useNativeDriver: true,
       isInteraction: false,
     };
+    if (childrenCount > 1 || forceRoll) {
+      Animated.sequence([
+        Animated.parallel([
+          Animated.timing(translateY, {
+            toValue: 20,
+            ...defaultConfig,
+            duration: 0,
+          }),
+          Animated.timing(opacity, {
+            toValue: 0,
+            ...defaultConfig,
+            duration: 0,
+          }),
+        ]),
 
-    Animated.sequence([
+        Animated.parallel([
+          Animated.timing(translateY, {
+            toValue: 0,
+            ...defaultConfig,
+          }),
+          Animated.timing(opacity, {
+            toValue: 1,
+            ...defaultConfig,
+          }),
+        ]),
+
+        Animated.delay(interval),
+
+        Animated.parallel([
+          Animated.timing(translateY, {
+            toValue: -10,
+            ...defaultConfig,
+          }),
+          Animated.timing(opacity, {
+            toValue: 0,
+            ...defaultConfig,
+          }),
+        ]),
+      ]).start();
+    } else {
       Animated.parallel([
         Animated.timing(translateY, {
-          toValue: 20,
-          ...defaultConfig,
-          duration: 0,
-        }),
-        Animated.timing(opacity, {
           toValue: 0,
           ...defaultConfig,
           duration: 0,
-        }),
-      ]),
-
-      Animated.parallel([
-        Animated.timing(translateY, {
-          toValue: 0,
-          ...defaultConfig,
         }),
         Animated.timing(opacity, {
           toValue: 1,
           ...defaultConfig,
+          duration: 0,
         }),
-      ]),
-
-      Animated.delay(interval),
-
-      Animated.parallel([
-        Animated.timing(translateY, {
-          toValue: -10,
-          ...defaultConfig,
-        }),
-        Animated.timing(opacity, {
-          toValue: 0,
-          ...defaultConfig,
-        }),
-      ]),
-    ]).start();
-  }, [animationDuration]); // eslint-disable-line react-hooks/exhaustive-deps
+      ]).start();
+    }
+  }, [animationDuration, childrenCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     animate();
   }, [animate]);
 
   useInterval(() => {
-    setVisibleIndex((visibleIndex + 1) % childrenCount);
-    animate();
+    if (childrenCount > 1 || forceRoll) {
+      setVisibleIndex((visibleIndex + 1) % childrenCount);
+      animate();
+    }
   }, interval + animationDuration + delayBetween);
 
   return (
