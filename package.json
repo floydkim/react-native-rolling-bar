@@ -32,7 +32,7 @@
   "homepage": "https://github.com/floydkim/react-native-rolling-bar#readme",
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.60.0"
+    "react-native": "^0.62.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -44,7 +44,7 @@
     "metro-react-native-babel-preset": "^0.56.0",
     "react-test-renderer": "16.9.0",
     "react": "^16.8.0",
-    "react-native": "^0.60.0"
+    "react-native": "^0.62.3"
   },
   "jest": {
     "preset": "react-native"
