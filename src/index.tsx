@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback, ReactNode } from 'react';
-import { View, Animated, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Animated, StyleSheet, ViewProps, StyleProp } from 'react-native';
 import useInterval from './util/useInterval';
 
 type Props = {
-  children: ReactNode;
   interval: number;
-  customStyle?: Object;
+  customStyle?: StyleProp<ViewProps>;
   animationDuration?: number;
   delayBetween?: number;
   defaultStyle?: boolean;
