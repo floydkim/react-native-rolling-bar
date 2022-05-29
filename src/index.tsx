@@ -114,7 +114,7 @@ const RollingBar: React.FC<Props> = (props) => {
         {React.Children.map(children, (child, idx) => {
           return (
             <View key={`${idx}`} style={visibleIndex !== idx && styles.hideRow}>
-              {child}
+              <>{child}</>
             </View>
           );
         })}
