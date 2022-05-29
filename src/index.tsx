@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Animated, StyleSheet, ViewProps, StyleProp } from 'react-native';
+import { View, Animated, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import useInterval from './util/useInterval';
 
 type Props = {
   interval: number;
-  customStyle?: StyleProp<ViewProps>;
+  customStyle?: StyleProp<ViewStyle>;
   animationDuration?: number;
   delayBetween?: number;
   defaultStyle?: boolean;
