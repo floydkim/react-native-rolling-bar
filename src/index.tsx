@@ -1,20 +1,17 @@
-// @flow
-
-import React, {useState, useEffect, useCallback} from 'react';
-import {View, Animated, StyleSheet} from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Animated, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import useInterval from './util/useInterval';
 
 type Props = {
-  children: React$Node,
-  interval: number,
-  customStyle?: Object,
-  animationDuration?: number,
-  delayBetween?: number,
-  defaultStyle?: boolean,
-  forceRoll?: boolean,
+  interval: number;
+  customStyle?: StyleProp<ViewStyle>;
+  animationDuration?: number;
+  delayBetween?: number;
+  defaultStyle?: boolean;
+  forceRoll?: boolean;
 };
 
-const RollingBar: (props: Props) => React$Node = props => {
+const RollingBar: React.FC<Props> = (props) => {
   const [opacity] = useState(new Animated.Value(0));
   const [translateY] = useState(new Animated.Value(10));
   const [visibleIndex, setVisibleIndex] = useState(0);
@@ -106,16 +103,18 @@ const RollingBar: (props: Props) => React$Node = props => {
       style={[
         defaultStyle ? styles.container : styles.containerMinimal,
         customStyle,
-      ]}>
+      ]}
+    >
       <Animated.View
         style={{
           opacity,
-          transform: [{translateY}, {perspective: 1000}],
-        }}>
+          transform: [{ translateY }, { perspective: 1000 }],
+        }}
+      >
         {React.Children.map(children, (child, idx) => {
           return (
             <View key={`${idx}`} style={visibleIndex !== idx && styles.hideRow}>
-              {child}
+              <>{child}</>
             </View>
           );
         })}
@@ -143,5 +142,5 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     justifyContent: 'center',
   },
-  hideRow: {display: 'none'},
+  hideRow: { display: 'none' },
 });
