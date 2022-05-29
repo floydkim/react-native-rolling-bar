@@ -34,7 +34,16 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "react",
+    "native",
+    "rolling",
+    "banner",
+    "bar",
+    "UI",
+    "vertical",
+    "notice",
+    "transition"
   ],
   "repository": "https://github.com/floydkim/react-native-rolling-bar",
   "author": "Floyd Kim <for12gm@gmail.com> (https://github.com/floydkim)",
