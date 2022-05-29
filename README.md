@@ -1,8 +1,6 @@
 # react-native-rolling-bar
 
-Rolling bar UI component for React Native.
-
-Based on [react-native framework](https://github.com/facebook/react-native/) by Meta (Facebook).
+Rolling bar UI component for [React Native](https://github.com/facebook/react-native/).
 
 ## Demo
 
@@ -58,6 +56,8 @@ import RollingContent from 'react-native-rolling-bar';
   </YourBarComponent>
 ```
 
+## Acknowledge
+Project template generated using [react-native-builder-bob](https://github.com/callstack/react-native-builder-bob) 👍
 
 ## License
 
