@@ -1,26 +1,63 @@
 # react-native-rolling-bar
 
-Rolling bar (banner) UI for React Native
+Rolling bar UI component for React Native.
 
-## Installation
+Based on [react-native framework](https://github.com/facebook/react-native/) by Meta (Facebook).
+
+## Demo
+
+<img src='assetsReadMe/rollingbarworking.gif' width='300' alt='demo image' />
+
+## Install
 
 ```sh
 npm install react-native-rolling-bar
 ```
 
+## Props
+
+| Name              | type    | default value | description                                                                                                           |
+|-------------------|---------|---------------|-----------------------------------------------------------------------------------------------------------------------|
+| customStyle       | Object  | -             | custom styles for container                                                                                           |
+| interval          | number  | 3000          | content change interval time in milliseconds                                                                          |
+| animationDuration | number  | 600           | fade transition duration in milliseconds                                                                              |
+| delayBetween      | number  | 100           | delay in milliseconds between fade-out and fade-in of next content (too short delay would cause incorrect transition) |
+| defaultStyle      | boolean | false         | If false, removes default style. Set true If you want to use default style.                                           |
+| forceRoll         | boolean | false         | If true, force rolling animation even if there is only one content.                                                   |
+
 ## Usage
 
-```js
-import { multiply } from "react-native-rolling-bar";
+1. As a rolling banner
+```jsx
+import RollingBar from 'react-native-rolling-bar';
 
 // ...
 
-const result = await multiply(3, 7);
+  <RollingBar interval={3000} defaultStyle={true}>
+    // You can fully customize this RollingBar component with customStyle prop.
+    <ChildComponentOne />
+    <ChildComponentTwo />
+    <ChildComponentTree />
+    ...
+  </RollingBar>
 ```
 
-## Contributing
+2. As a transition content
+```jsx
+import RollingContent from 'react-native-rolling-bar';
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+// ...
+
+  <YourBarComponent>
+    // Without default style, you can also put the RollingBar inside your bar component.
+    <RollingContent interval={3000} defaultStyle={false} customStyle={yourStyle}>
+      <ChildOne />
+      <ChildTwo />
+      ...
+    </RollingContent>
+  </YourBarComponent>
+```
+
 
 ## License
 
